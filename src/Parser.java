@@ -53,10 +53,14 @@ public class Parser
                 // if so take the rest of the tokens in the line.
                 if(match('/'))
                 {
-                    while(peek() != '\n' && isAtEnd())
+                    while(peek() != '\n' && !isAtEnd())
                     {
                         nextToken();
                     }
+                }
+                else if(match('*'))
+                {
+                    blockComment();
                 }
                 else
                 {
@@ -107,6 +111,11 @@ public class Parser
         }
 
         addToken(type);
+    }
+
+    private void blockComment()
+    {
+
     }
 
     private void number()
