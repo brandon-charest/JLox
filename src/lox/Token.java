@@ -1,4 +1,4 @@
-
+package src.lox;
 
 public class Token
 {

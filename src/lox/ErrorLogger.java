@@ -1,3 +1,5 @@
+package src.lox;
+
 public class ErrorLogger {
 
     //TODO: write error logs to file

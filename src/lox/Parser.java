@@ -1,3 +1,5 @@
+package src.lox;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,7 +117,7 @@ public class Parser
 
     private void blockComment()
     {
-
+        //TODO finish block comment
     }
 
     private void number()
