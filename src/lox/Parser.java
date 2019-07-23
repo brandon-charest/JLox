@@ -1,4 +1,4 @@
-package src.lox;
+package lox;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package src.lox;
+package lox;
 
 abstract class Expr
 {
