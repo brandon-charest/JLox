@@ -4,15 +4,10 @@ import java.io.File
 import java.io.PrintWriter
 import java.util.*
 
-fun main(args: Array<String>)
+fun main()
 {
-    if(args.size != 1)
-    {
-        print("Usage: generate_ast <output directory>")
-        System.exit(1)
-    }
 
-    var outputDir = args[0]
+    var outputDir = "Change to relative path!"
     defineAst(outputDir, "Expr", Arrays.asList(
             "Binary   : Expr left, Token operator, Expr right",
             "Grouping : Expr expression",
@@ -27,7 +22,7 @@ fun defineAst(outputDir: String, baseName: String, types: List<String>)
     var writer = File(path).printWriter()
 
     writer.use{ out ->
-        out.println("package src.lox;")
+        out.println("package lox;")
         out.println()
         out.println("import java.util.List;")
         out.println()
