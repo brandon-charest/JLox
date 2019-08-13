@@ -62,7 +62,7 @@ public class Lox {
 
     private static void run(String source)
     {
-        Parser parse = new Parser(source);
+        Scanner parse = new Scanner(source);
         List<Token> tokens = parse.parseTokens();
 
         for (Token token: tokens)
