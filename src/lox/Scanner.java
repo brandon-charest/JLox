@@ -17,20 +17,20 @@ public class Scanner
         this.source = source;
     }
 
-    List<Token> parseTokens()
+    List<Token> scanTokens()
     {
         while (!isAtEnd())
         {
 
             start = current;
-            parseToken();
+            scanToken();
         }
 
         tokens.add(new Token(TokenType.EOF, "", null, line));
         return tokens;
     }
 
-    private void parseToken()
+    private void scanToken()
     {
         char c = nextToken();
         switch (c)
@@ -45,6 +45,8 @@ public class Scanner
             case '+': addToken(TokenType.PLUS); break;
             case ';': addToken(TokenType.SEMICOLON); break;
             case '*': addToken(TokenType.STAR); break;
+            case '?': addToken(TokenType.QUESTION); break;
+            case ':': addToken(TokenType.COLON); break;
             //need to check if char following is a '='
             case '!': addToken(match('=') ? TokenType.BANG_EQUAL : TokenType.BANG); break;
             case '=': addToken(match('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL); break;

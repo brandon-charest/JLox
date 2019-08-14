@@ -9,17 +9,32 @@ import static lox.TokenType.*;
 * */
 public class Parser
 {
+    private static class ParseError extends RuntimeException {}
+
     private final List<Token> tokens;
     private int current = 0;
+    private final String missing_left_operand = "Missing left-hand operand.";
 
     Parser(List<Token> tokens)
     {
         this.tokens = tokens;
     }
 
+    Expr parse()
+    {
+        try
+        {
+            return expression();
+        }
+        catch (ParseError error)
+        {
+            return null;
+        }
+    }
+
     private Expr expression()
     {
-        return equality();
+        return conditional();
     }
 
     private Expr equality()
@@ -37,7 +52,7 @@ public class Parser
 
     private Expr comparison()
     {
-        Expr expr = new addition();
+        Expr expr = addition();
 
         while(match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL))
         {
@@ -74,6 +89,19 @@ public class Parser
         return expr;
     }
 
+    private Expr conditional()
+    {
+        Expr expr = equality();
+
+        if(match(QUESTION))
+        {
+            Expr thenBranch = expression();
+            consume(COLON, "Expected ':' after then branch of conditional expression.");
+            Expr elseBranch = conditional();
+            expr = new Expr.Conditional(expr, thenBranch, elseBranch);
+        }
+        return expr;
+    }
 
     private Expr unary()
     {
@@ -116,6 +144,35 @@ public class Parser
             return new Expr.Grouping(expr);
         }
 
+        if(match(BANG_EQUAL, EQUAL_EQUAL))
+        {
+            error(previous(), missing_left_operand);
+            equality();
+            return null;
+        }
+
+        if(match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL))
+        {
+            error(previous(), missing_left_operand);
+            comparison();
+            return null;
+        }
+
+        if(match(PLUS))
+        {
+            error(previous(), missing_left_operand);
+            addition();
+            return null;
+        }
+
+        if(match(SLASH, STAR))
+        {
+            error(previous(), missing_left_operand);
+            multiplication();
+            return null;
+        }
+
+        throw error(peek(), "Expect expression.");
     }
 
     private Token consume(TokenType type, String message)
@@ -176,5 +233,39 @@ public class Parser
     private Token previous()
     {
         return tokens.get(current -1);
+    }
+
+    private ParseError error(Token token, String message)
+    {
+        ErrorLogger.error(token, message);
+        return new ParseError();
+    }
+
+    //Discard tokens until we reach a statement boundary
+    private void synchronize()
+    {
+        advance();
+
+        while(!isAtEnd())
+        {
+            if(previous().type == SEMICOLON)
+            {
+                return;
+            }
+
+            switch (peek().type)
+            {
+                case CLASS:
+                case FUN:
+                case VAR:
+                case FOR:
+                case IF:
+                case WHILE:
+                case PRINT:
+                case RETURN:
+                    return;
+            }
+            advance();
+        }
     }
 }
