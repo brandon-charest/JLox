@@ -21,7 +21,6 @@ public class Scanner
     {
         while (!isAtEnd())
         {
-
             start = current;
             scanToken();
         }
@@ -107,7 +106,7 @@ public class Scanner
         }
 
         String word  = source.substring(start, current);
-        TokenType type = ReseredWords.keywords.get(word);
+        TokenType type = ReservedWords.keywords.get(word);
 
         if(type == null)
         {
@@ -129,7 +128,7 @@ public class Scanner
             nextToken();
         }
 
-        if(peek() == '.' && isDigit(peek(1)))
+        if(peek() == '.' && isDigit(peekNext()))
         {
             // consume '.'
             nextToken();
@@ -222,13 +221,13 @@ public class Scanner
         return source.charAt(current);
     }
 
-    private char peek(int lookahead)
+    private char peekNext()
     {
-        if(current + lookahead >= source.length())
+        if(current + 1 >= source.length())
         {
             return '\0';
         }
-        return source.charAt(current + lookahead);
+        return source.charAt(current + 1);
     }
 
     private char nextToken()

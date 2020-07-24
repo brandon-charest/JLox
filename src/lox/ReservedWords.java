@@ -3,7 +3,7 @@ package lox;
 import java.util.HashMap;
 import java.util.Map;
 
-class ReseredWords
+class ReservedWords
 {
     public static final Map<String, TokenType> keywords;
 

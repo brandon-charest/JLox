@@ -2,7 +2,7 @@ package lox;
 
 public class RunTimeError extends RuntimeException
 {
-    final Token token;
+    private final Token token;
 
     RunTimeError(Token token, String message)
     {
