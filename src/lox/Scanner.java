@@ -3,6 +3,7 @@ package lox;
 import java.util.ArrayList;
 import java.util.List;
 import static lox.TokenType.*;
+
 public class Scanner
 {
 
@@ -25,7 +26,7 @@ public class Scanner
             scanToken();
         }
 
-        tokens.add(new Token(TokenType.EOF, "", null, line));
+        tokens.add(new Token(EOF, "", null, line));
         return tokens;
     }
 
@@ -43,9 +44,9 @@ public class Scanner
             case '-': addToken(MINUS); break;
             case '+': addToken(PLUS); break;
             case ';': addToken(SEMICOLON); break;
-            case '*': addToken(STAR); break;
+           /* case '*': addToken(STAR); break;
             case '?': addToken(QUESTION); break;
-            case ':': addToken(COLON); break;
+            case ':': addToken(COLON); break;*/
             //need to check if char following is a '='
             case '!': addToken(match('=') ? BANG_EQUAL : BANG); break;
             case '=': addToken(match('=') ? EQUAL_EQUAL : EQUAL); break;
@@ -61,10 +62,10 @@ public class Scanner
                         nextToken();
                     }
                 }
-                else if(match('*'))
+               /* else if(match('*'))
                 {
                     blockComment();
-                }
+                }*/
                 else
                 {
                     addToken(SLASH);
@@ -110,7 +111,7 @@ public class Scanner
 
         if(type == null)
         {
-            type = TokenType.IDENTIFIER;
+            type = IDENTIFIER;
         }
 
         addToken(type);

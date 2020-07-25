@@ -1,14 +1,18 @@
 package lox;
 
-public class Interpreter implements Expr.Visitor<Object>
+import java.util.List;
+
+public class Interpreter implements Expr.Visitor<Object>, Statement.Visitor<Void>
 {
 
-    void interpret(Expr expression)
+    void interpret(List<Statement> stmts)
     {
         try
         {
-            Object value = evaluate(expression);
-            System.out.println(stringify(value));
+            for (Statement stmt: stmts)
+            {
+                execute(stmt);
+            }
         }
         catch (RunTimeError error)
         {
@@ -180,6 +184,11 @@ public class Interpreter implements Expr.Visitor<Object>
         return expr.accept(this);
     }
 
+    private void execute(Statement stmt)
+    {
+        stmt.accept(this);
+    }
+
     private Boolean isEqual(Object x, Object y)
     {
         if(x == null && y == null)
@@ -193,5 +202,20 @@ public class Interpreter implements Expr.Visitor<Object>
         }
 
         return x.equals(y);
+    }
+
+    @Override
+    public Void visitPrintStmt(Statement.Print stmt)
+    {
+        Object value = evaluate(stmt.expression);
+        System.out.println(stringify(value));
+        return null;
+    }
+
+    @Override
+    public Void visitExpressionStmt(Statement.Expression stmt)
+    {
+        evaluate(stmt.expression);
+        return null;
     }
 }
