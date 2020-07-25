@@ -5,6 +5,7 @@ abstract class Statement {
     {
         R visitPrintStmt(Print stmt);
         R visitExpressionStmt(Expression stmt);
+        R visitVariableStmt(Expression stmt);
     }
 
     abstract <R> R accept(Visitor<R> visitor);
@@ -38,6 +39,23 @@ abstract class Statement {
         <R> R accept(Visitor<R> visitor)
         {
             return visitor.visitExpressionStmt(this);
+        }
+    }
+
+    static class Var extends Statement
+    {
+        final Token name;
+        final Expr initializer;
+
+        Var(Token name, Expr initializer)
+        {
+            this.name = name;
+            this.initializer = initializer;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return null;
         }
     }
 }
