@@ -3,6 +3,19 @@ package lox;
 public class Interpreter implements Expr.Visitor<Object>
 {
 
+    void interpret(Expr expression)
+    {
+        try
+        {
+            Object value = evaluate(expression);
+            System.out.println(stringify(value));
+        }
+        catch (RunTimeError error)
+        {
+           ErrorLogger.runTimeError(error);
+        }
+    }
+
     @Override
     public Object visitBinaryExpr(Expr.Binary expr)
     {
@@ -105,6 +118,26 @@ public class Interpreter implements Expr.Visitor<Object>
         }
 
         return evaluate(expr.elseBranch);
+    }
+
+    private String stringify(Object object)
+    {
+        if(object == null)
+        {
+            return "nil";
+        }
+
+        String text = object.toString();
+        // Remove ".0" from integer-valued doubles
+        if(object instanceof Double)
+        {
+            if (text.endsWith(".0"))
+            {
+                text = text.substring(0, text.length()-2);
+            }
+        }
+
+        return text;
     }
 
     private void checkNumberOperand(Token operator, Object operand)

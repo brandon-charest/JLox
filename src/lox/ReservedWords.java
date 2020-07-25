@@ -3,6 +3,8 @@ package lox;
 import java.util.HashMap;
 import java.util.Map;
 
+import static lox.TokenType.*;
+
 class ReservedWords
 {
     public static final Map<String, TokenType> keywords;
@@ -10,21 +12,21 @@ class ReservedWords
     static
     {
         keywords = new HashMap<>();
-        keywords.put("and",   TokenType.AND);
-        keywords.put("class", TokenType.CLASS);
-        keywords.put("else",  TokenType.ELSE);
-        keywords.put("false", TokenType.FALSE);
-        keywords.put("for",   TokenType.FOR);
-        keywords.put("fun",   TokenType.FUN);
-        keywords.put("if",    TokenType.IF);
-        keywords.put("nil",   TokenType.NIL);
-        keywords.put("or",    TokenType.OR);
-        keywords.put("print", TokenType.PRINT);
-        keywords.put("return",TokenType.RETURN);
-        keywords.put("super", TokenType.SUPER);
-        keywords.put("this",  TokenType.THIS);
-        keywords.put("true",  TokenType.TRUE);
-        keywords.put("var",   TokenType.VAR);
-        keywords.put("while", TokenType.WHILE);
+        keywords.put("and",   AND);
+        keywords.put("class", CLASS);
+        keywords.put("else",  ELSE);
+        keywords.put("false", FALSE);
+        keywords.put("for",   FOR);
+        keywords.put("fun",   FUN);
+        keywords.put("if",    IF);
+        keywords.put("nil",   NIL);
+        keywords.put("or",    OR);
+        keywords.put("print", PRINT);
+        keywords.put("return",RETURN);
+        keywords.put("super", SUPER);
+        keywords.put("this",  THIS);
+        keywords.put("true",  TRUE);
+        keywords.put("var",   VAR);
+        keywords.put("while", WHILE);
     }
 }

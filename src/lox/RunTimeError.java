@@ -1,8 +1,8 @@
 package lox;
 
-public class RunTimeError extends RuntimeException
+class RunTimeError extends RuntimeException
 {
-    private final Token token;
+    final Token token;
 
     RunTimeError(Token token, String message)
     {
