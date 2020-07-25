@@ -44,9 +44,9 @@ public class Scanner
             case '-': addToken(MINUS); break;
             case '+': addToken(PLUS); break;
             case ';': addToken(SEMICOLON); break;
-           /* case '*': addToken(STAR); break;
+            case '*': addToken(STAR); break;
             case '?': addToken(QUESTION); break;
-            case ':': addToken(COLON); break;*/
+            case ':': addToken(COLON); break;
             //need to check if char following is a '='
             case '!': addToken(match('=') ? BANG_EQUAL : BANG); break;
             case '=': addToken(match('=') ? EQUAL_EQUAL : EQUAL); break;
@@ -62,10 +62,10 @@ public class Scanner
                         nextToken();
                     }
                 }
-               /* else if(match('*'))
+                else if(match('*'))
                 {
                     blockComment();
-                }*/
+                }
                 else
                 {
                     addToken(SLASH);
@@ -119,7 +119,23 @@ public class Scanner
 
     private void blockComment()
     {
-        //TODO finish block comment
+        while(!isAtEnd())
+        {
+            while(!match('*') && !isAtEnd())
+            {
+                if(peek() == '\n')
+                {
+                    line++;
+                }
+                nextToken();
+            }
+
+            if(!match('/'))
+            {
+                ErrorLogger.error(line, "Comment does not terminate.");
+            }
+            break;
+        }
     }
 
     private void number()

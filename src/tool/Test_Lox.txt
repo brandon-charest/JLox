@@ -1,3 +1,9 @@
+// Single line comment
 print "one";
+
+/*
+Multi-line Test
+*/
+
 print true;
 print 2 + 1;
